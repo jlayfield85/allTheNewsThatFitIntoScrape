@@ -63,3 +63,11 @@ router.get("api/notes:headline_id?", function(req, res){
         res.json(data);
     })
 })
+
+router.delete("api/notes/:id", function(req, res){
+    var query = {};
+    query.id = req.params.id;
+    notesController.delete(query, function(err, data){
+        res.json(data);
+    })
+})
