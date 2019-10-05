@@ -28,3 +28,14 @@ router.get("/api/fetch", function(req, res){
         }    
     });
 });
+
+router.get("/api/headlines", function(req, res){
+    var query = {};
+    if (req,query.saved){
+        query = req.query;
+    }
+
+    headlinesController.get(query, function(data){
+        res.json(data);
+    });
+});
