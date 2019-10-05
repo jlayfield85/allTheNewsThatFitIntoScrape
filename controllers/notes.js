@@ -1,16 +1,30 @@
-var mongoose = require("mongoose");
+// Controller for our notes
 
-var Schema = mongoose.Schema;
+var Note = require ("../models/Note");
+var makeDate = require("../scripts/date");
 
-var noteSchema = new Schema({
-    _headline: {
-        type: Schema.Types.ObjectID,
-        ref: "Headline",
+module.exports = {
+    get: function(data, cb) {
+        Note.find({
+            _headlineID: data._headlineID
+        }, cb);
     },
-    date: String,
-    noteText: String
-});
 
-var Note = mongoose.model("Note", noteSchema);
+    save: function(data, cb) {
+        var newNote = {
+            _headlineID: data._id,
+            date: makeDate(),
+            noteText: data.noteText
+        };
 
-module.exports = Note;
+    Note.create(newNote, function (err, doc) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log(doc);
+            cb(doc);
+        }
+    })   
+    }
+}
